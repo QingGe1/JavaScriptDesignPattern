@@ -7,44 +7,6 @@
 </head>
 
 <body>
-<script>
-  const closeDoorCommand = {
-    execute: function() {
-      console.log('close door')
-    }
-  }
-
-  const openQQ = {
-    execute() {
-      console.log('open qq')
-    }
-  }
-
-  const MacroCommand = function () {
-    return {
-      commandList: [],
-      addCommand(command) {
-        this.commandList.push(command)
-      },
-      deleteCommand(command) {
-        const index = this.commandList.findIndex(item => item === command)
-        index !== -1 && this.commandList.splice(index, 1)
-      },
-      execute() {
-        this.commandList.forEach(command => {
-          command.execute()
-        })
-      },
-    }
-  }
-  const macroCommand = MacroCommand();
-  macroCommand.addCommand(closeDoorCommand)
-  macroCommand.addCommand(openQQ)
-  macroCommand.execute()
-  macroCommand.deleteCommand(openQQ)
-  macroCommand.execute()
-
-</script>
 </body>
 
 </html>

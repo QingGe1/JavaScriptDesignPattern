@@ -7,4 +7,3 @@ Function.prototype.uncurrying = function () {
 };
 
 console.log(Object.keys(Array.prototype));
-
