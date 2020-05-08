@@ -2,25 +2,24 @@
 // 此时希望用一种松耦合的方式来设计软件，使得请求发送者和请求接收者能够消除彼此之间的耦合关系。
 // command setCommand
 
-
 /*********************************************************************************************/
 
 // js 中命令模式
 const bindClick = function (element, command) {
-  element.onclick = command
-}
+  element.onclick = command;
+};
 
 const setCommand = function (element, command) {
   element.onclick = function () {
-    command.execute()
-  }
-}
+    command.execute();
+  };
+};
 // 具体行为
 const MenuBar = {
   refresh: function () {
-    console.log('刷新菜单界面')
-  }
-}
+    console.log('刷新菜单界面');
+  },
+};
 
 const SubMenu = {
   add: function () {
@@ -28,11 +27,10 @@ const SubMenu = {
   },
   del: function () {
     console.log('删除子菜单');
-  }
+  },
 };
 
-bindClick(button1, MenuBar.refresh)
-
+bindClick(button1, MenuBar.refresh);
 
 /*********************************************************************************************/
 // 模拟传统面向对象语言的命令模式实现。
@@ -86,7 +84,6 @@ bindClick(button1, MenuBar.refresh)
 // const refreshMenuBarCommand = new RefreshMenuBarCommand(MenuBar);
 // const addSubMenuCommand = new AddSubMenuCommand(SubMenu);
 // const delSubMenuCommand = new DelSubMenuCommand(SubMenu);
-
 
 // const button1 = document.getElementById('button1');
 // const button2 = document.getElementById('button2');

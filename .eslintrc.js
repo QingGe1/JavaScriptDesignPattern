@@ -5,10 +5,8 @@ module.exports = {
         "es6": true
     },
     "plugins": ["prettier"],
-    "extends": [
-        "eslint:recommended",
-        "prettier"
-    ],
+    // "extends": ["eslint:recommended", "prettier"],
+    "extends": ["plugin:prettier/recommended"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -21,9 +19,15 @@ module.exports = {
         }
     },
     "rules": {
-        'prefer-template': 'error',
+        "prettier/prettier": "error",
+        "prettier/prettier": [
+            "error",
+            {
+                singleQuote: true,
+            }
+        ],
+        // 'prefer-template': 'error',
         'no-var': 'error',
-        "quotes": ['error', "single"],
-        "indent": ['error', 2],//缩进风格
+        // "indent": ['error', 2],//缩进风格
     }
 };
