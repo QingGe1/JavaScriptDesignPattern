@@ -45,9 +45,9 @@ const func1 = function () {
 const func3 = function () {
   console.log('3');
 };
-func = func.before(func1).after(func3);
-func();
-
+fun = func.before(func1).after(func3);
+fun();
+console.log(fun);
 /*
  * 代理模式和装饰者模式最重要的区别在于它们的意图和设计目的。
  * 代理模式的目的是，当直接访问本体不方便或者不符合需要时，为这个本体提供一个替代者。
