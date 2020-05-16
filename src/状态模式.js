@@ -11,10 +11,20 @@
  * 逻辑分散，无法在一个地方就看出整个状态机的逻辑
  *
  * 性能优化点
- * 仅当state对象被需要时才创建并随后销毁
+ * 1.仅当state对象被需要时才创建并随后销毁
  *    如果状态的改变很频繁，最好一开始就把这些state对象都创建出来，也没有必要销毁它们，因为可能很快将再次用到它们
- * 各Context对象可以共享一个state对象，这也是享元模式的应用场景之一
+ * 2.各Context对象可以共享一个state对象，这也是享元模式的应用场景之一
  */
+/*
+ * 策略模式和状态模式对比
+ * 相同点
+ * 都有一个上下文、一些策略或者状态类，上下文把请求委托给这些类来执行。
+ *
+ * 不同点
+ * 策略模式中的各个策略类之间是平等又平行的，它们之间没有任何联系
+ * 状态模式中，状态和状态对应的行为是早已被封装好的，状态之间的切换也早被规定完成，"改变行为"这件事情发生在状态模式内部
+ */
+
 let plugin = (function () {
   let plugin = document.createElement('embed');
   plugin.style.display = 'none';
@@ -87,6 +97,7 @@ Upload.prototype.bindEvent = function () {
 // 状态对应的逻辑行为放在Upload类中
 Upload.prototype.sign = function () {
   this.plugin.sign();
+  // 我认为的状态模式和策略模式主要的区别
   this.currState = this.signState;
 };
 
@@ -116,6 +127,21 @@ Upload.prototype.error = function () {
 Upload.prototype.del = function () {
   this.plugin.del();
   this.dom.parentNode.removeChild(this.dom);
+};
+let FSM = {
+  sign() {
+    this.plugin.sign();
+    this.currState = this.uploadingState;
+  },
+  uploading() {
+    this.plugin.uploading();
+    this.currState = this.pauseState;
+  },
+  done() {
+    this.plugin.done();
+  },
+  error() {},
+  del() {},
 };
 // 编写各个状态类的实现
 let StateFactory = (function () {
