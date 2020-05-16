@@ -1,18 +1,11 @@
 // 有时候需要向某些对象发送请求，但是并不知道请求的接收者是谁，也不知道被请求的操作是什么，
 // 此时希望用一种松耦合的方式来设计软件，使得请求发送者和请求接收者能够消除彼此之间的耦合关系。
 // command setCommand
-
 /*********************************************************************************************/
 
-// js 中命令模式
+// js 中 命令模式
 const bindClick = function (element, command) {
   element.onclick = command;
-};
-
-const setCommand = function (element, command) {
-  element.onclick = function () {
-    command.execute();
-  };
 };
 // 具体行为
 const MenuBar = {
