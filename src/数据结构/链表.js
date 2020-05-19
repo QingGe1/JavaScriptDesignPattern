@@ -142,3 +142,35 @@ LinkList.prototype.clear = function () {
 // linkList.remove(1);
 // console.log(linkList.print());
 // console.log(linkList.indexOf(3));
+
+const linkList = new LinkList();
+linkList.append(0);
+linkList.append(1);
+linkList.append(2);
+linkList.append(3);
+linkList.append(4);
+// 迭代翻转
+function reverse_iter(head) {
+  if (!head) {
+    return null;
+  }
+  let prevNode = null;
+  let currNode = head;
+  while (currNode) {
+    let nextNode = currNode.next;
+    currNode.next = prevNode;
+    prevNode = currNode;
+    currNode = nextNode;
+  }
+  return prevNode;
+}
+
+// console.log(reverse_iter(linkList.head));
+// 递归翻转
+function reverse_digui(head) {
+  if (!head) {
+    return null;
+  }
+  let new_head = reverse_digui(head.next);
+}
+console.log(reverse_digui(linkList.head));
