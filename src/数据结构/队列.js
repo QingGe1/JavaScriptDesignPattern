@@ -130,6 +130,7 @@ function print_yanghui(n) {
   let queue = new Queue();
   queue.enqueue(1);
   // 第一层for循环控制打印几层
+  // 为了让第二层循环正常循环 必须从1开始（若从0开始，第一行没法打印）
   for (let i = 1; i <= n; i++) {
     let line = '';
     let pre = 0;
@@ -144,8 +145,172 @@ function print_yanghui(n) {
     }
     // 每一层最后一个数字是1,上面的for循环没有计算最后一个数
     queue.enqueue(1);
-    // console.log(line);
-    console.log(queue);
+    console.log(line);
+    // console.log(queue);
   }
 }
-print_yanghui(10);
+// print_yanghui(10);
+
+// 1
+// 1  1
+// 1  2  1
+// 1  3  3  1
+// 1  4  6  4  1
+// 1  5  10  10  5  1
+// 1  6  15  20  15  6  1
+// 1  7  21  35  35  21  7  1
+// 1  8  28  56  70  56  28  8  1
+// 1  9  36  84  126  126  84  36  9  1
+
+// 迷宫问题
+// 元素为0，表示这个点可以通行，
+// 元素为1，表示不可以通行，
+// 起始点是maze_array[2][1], 终点是 maze_array[3][5]
+// 请用程序计算这两个点是否相通，如果相通请输出两点之间的最短路径（从起始点到终点所经过的每一个点）
+let maze_array = [
+  [0, 0, 1, 0, 0, 0, 0],
+  [0, 0, 1, 1, 0, 0, 0],
+  [0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 1, 1, 0, 0],
+  [1, 0, 0, 0, 1, 0, 0],
+  [1, 1, 1, 0, 0, 0, 0],
+  [1, 1, 1, 0, 0, 0, 0],
+];
+
+class Node {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.step = 0;
+  }
+}
+class Position {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+}
+
+function findPosition(pos, maze) {
+  let x = pos.x;
+  let y = pos.y;
+  let pos_arr = [];
+  // 上
+  if (x - 1 >= 0) {
+    pos_arr.push(new Position(x - 1, y));
+  }
+  // 下
+  if (x + 1 < maze.length) {
+    pos_arr.push(new Position(x + 1, y));
+  }
+  // 左
+  if (y - 1 >= 0) {
+    pos_arr.push(new Position(x, y - 1));
+  }
+  // 右
+  if (y + 1 < maze[x].length) {
+    pos_arr.push(new Position(x, y + 1));
+  }
+  return pos_arr;
+}
+
+let start_pos = new Position(2, 1);
+let end_pos = new Position(3, 5);
+
+function print_node(maze_node) {
+  for (let i = 0; i < maze_node.length; i++) {
+    let arr = [];
+    for (let j = 0; j < maze_node[i].length; j++) {
+      arr.push(maze_node[i][j].step);
+    }
+    console.log(arr);
+  }
+  console.log('--------------------------------');
+}
+function findPath(maze, start_pos, end_pos) {
+  let maze_node = [];
+  // 初始化maze_node,用于记录距离出发点的距离
+  for (let i = 0; i < maze_array.length; i++) {
+    let arr = maze_array[i];
+    let node_arr = [];
+    for (let j = 0; j < arr.length; j++) {
+      let node = new Node(i, j);
+      node_arr.push(node);
+    }
+    maze_node.push(node_arr);
+  }
+  // 先把出发点放入到队列中
+  let queue = new Queue();
+  queue.enqueue(start_pos);
+  let b_arrive = false;
+  let max_step = 0; // 记录从出发点到终点的距离
+  while (true) {
+    // 从队列中弹出一个点,计算这个点可以到达的位置
+    let position = queue.dequeue();
+    let pos_arr = findPosition(position, maze);
+    for (let i = 0; i < pos_arr.length; i += 1) {
+      const pos = pos_arr[i];
+      // 判断是否到达终点
+      if (pos.x === end_pos.x && pos.y === end_pos.y) {
+        b_arrive = true;
+        max_step = maze_node[position.x][position.y].step;
+        break;
+      }
+      // 若返回起点 跳出本次循环
+      if (pos.x === start_pos.x && pos.y === start_pos.y) {
+        continue;
+      }
+      // 若不能通过 跳出本次循环
+      if (maze[pos.x][pos.y] === 1) {
+        continue;
+      }
+      // 若已经标注过 跳出本次循环
+      if (maze_node[pos.x][pos.y].step > 0) {
+        continue;
+      }
+      maze_node[pos.x][pos.y].step = maze_node[position.x][position.y].step + 1;
+      queue.enqueue(pos);
+    }
+    // 到达终点
+    if (b_arrive) {
+      break;
+    }
+    // 栈为空,说明找不到
+    if (queue.isEmpty()) {
+      break;
+    }
+  }
+  // print_node(maze_node);
+  // [ 2, 3, 0, 0, 0, 0, 0 ]
+  // [ 1, 2, 0, 0, 0, 0, 0 ]
+  // [ 0, 1, 2, 3, 0, 0, 0 ]
+  // [ 1, 2, 3, 0, 0, 0, 0 ]
+  // [ 0, 3, 4, 5, 0, 9, 0 ]
+  // [ 0, 0, 0, 6, 7, 8, 9 ]
+  // [ 0, 0, 0, 7, 8, 9, 10 ]
+  // 反向查找路径
+  let path = [];
+  // 有结果
+  if (b_arrive) {
+    path.push(end_pos);
+    let prevPos = end_pos;
+    let step = max_step;
+    // 在相邻点里边找 step 相同的点
+    while (step > 0) {
+      let pos_arr = findPosition(prevPos, maze);
+      for (let i = 0; i < pos_arr.length; i += 1) {
+        let pos = pos_arr[i];
+        if (maze_node[pos.x][pos.y].step === step) {
+          step -= 1;
+          prevPos = pos;
+          path.push(pos);
+          break;
+        }
+      }
+    }
+    path.push(start_pos);
+  }
+  return path.reverse();
+}
+
+findPath(maze_array, start_pos, end_pos);
