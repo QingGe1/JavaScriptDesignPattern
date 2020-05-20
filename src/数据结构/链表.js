@@ -170,10 +170,13 @@ function reverse_iter(head) {
 
 // console.log(reverse_iter(linkList.head));
 // 递归翻转
-function reverse_digui(head) {
-  if (!head) {
-    return null;
+function reverse_recursion(head) {
+  if (!head || !head.next) {
+    return head;
   }
-  let new_head = reverse_digui(head.next);
+  let new_head = reverse_recursion(head.next);
+  head.next.next = head; // 把当前节点连接到新链表上
+  head.next = null;
+  return new_head;
 }
-console.log(reverse_digui(linkList.head));
+console.log(reverse_recursion(linkList.head));
