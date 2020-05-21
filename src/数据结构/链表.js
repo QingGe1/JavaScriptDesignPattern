@@ -146,12 +146,6 @@ LinkList.prototype.clear = function () {
 // console.log(linkList.print());
 // console.log(linkList.indexOf(3));
 
-const linkList = new LinkList();
-linkList.append(0);
-linkList.append(1);
-linkList.append(2);
-linkList.append(3);
-linkList.append(4);
 // 迭代翻转
 function reverse_iter(head) {
   if (!head) {
@@ -179,4 +173,50 @@ function reverse_recursion(head) {
   head.next = null;
   return new_head;
 }
-console.log(reverse_recursion(linkList.head));
+// console.log(reverse_recursion(linkList.head));
+
+// 从尾到头打印链表
+function reverse_print(head) {
+  if (head.next) {
+    reverse_print(head.next);
+  }
+  console.log(head.data);
+}
+// reverse_print(linkList.head);
+
+// 合并两个两个有序链表
+const linkList1 = new LinkList();
+const linkList2 = new LinkList();
+[1, 4, 9].forEach((item) => {
+  linkList1.append(item);
+});
+console.log(linkList1.print());
+[2, 5, 6, 10].forEach((item) => {
+  linkList2.append(item);
+});
+console.log(linkList2.print());
+
+function merge_link(head1, head2) {
+  if (head1 == null) {
+    return head2;
+  }
+  if (head2 == null) {
+    return head1;
+  }
+  let merge = new LinkList();
+  let merge_head = null; // 合并后链表头
+  let merge_tail = null; // 合并后链表尾
+  let curr_1 = head1;
+  let curr_2 = head2;
+  while (curr_1 && curr_2) {
+    if (curr_1.data < curr_2.data) {
+      min_data = curr_1.data;
+      curr_1 = curr_1.next;
+    } else {
+      min_data = curr_2.data;
+      curr_2 = curr_2.next;
+    }
+  }
+}
+
+merge_link(linkList1.head, linkList2.head);
