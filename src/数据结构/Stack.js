@@ -64,3 +64,5 @@ function calc_exp(exp) {
   return stact.pop();
 }
 console.log(calc_exp(['4', '13', '5', '/', '+']));
+
+module.exports = { Stack };
