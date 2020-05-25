@@ -89,7 +89,6 @@ class MinHeap {
     return min;
   }
   print() {
-    console.log(this.heap);
     return this.heap;
   }
 
@@ -113,22 +112,21 @@ class MinHeap {
 
 class MaxHeap {
   constructor(size = 9999) {
-    this.heap = new Array(); // 数组
-    this.curr_size = 0; // 当前堆的大小
-    this.max_size = size; // 堆最大容量
+    this.heap = new Array();
+    this.curr_size = 0;
+    this.max_size = size;
   }
   init(arr) {
     this.max_size = arr.length;
     this.curr_size = this.max_size;
     this.heap = new Array(arr.length);
-    // 填充heap, 目前还不是一个堆
     for (let i = 0; i < this.curr_size; i++) {
       this.heap[i] = arr[i];
     }
-    let curr_pos = Math.floor((this.curr_size - 2) / 2); // 这是堆的最后一个分支节点
+    let curr_pos = Math.floor((this.curr_size - 2) / 2);
     while (curr_pos >= 0) {
-      this.shif_down(curr_pos, this.curr_size - 1); // 局部自上向下下滑调整
-      curr_pos -= 1; // 调整下一个分支节点
+      this.shif_down(curr_pos, this.curr_size - 1);
+      curr_pos -= 1;
     }
   }
   shif_down(start, m) {
@@ -187,7 +185,6 @@ class MaxHeap {
     return max;
   }
   print() {
-    console.log(this.heap);
     return this.heap;
   }
   size() {
