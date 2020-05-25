@@ -107,10 +107,24 @@ class BinarySearchTree {
     }
     if (data === node.data) {
       if (node.leftChild && node.rightChild) {
+        // 左右节点都存在
+        // 找右子树中序遍历的第一个节点（这个节点在右子树中是最小的）
+        // 这个节点比左子树中的值都大，比右子树中的值都小
+        let tmp = node.rightChild;
+        while (tmp.leftChild) {
+          tmp = tmp.leftChild;
+        }
+        // 被删除点的值等于中序下右子树第一个节点的值
+        node.data = tmp.data;
+        // 去右子树里删除中序下的第一个节点
+        return this.remove_data(node.rightChild, tmp.data);
       } else {
+        let parent = node.parent;
         if (node.leftChild) {
           this.link_parent(parent, node, node.leftChild);
         } else {
+          // 右节点 或 没有子节点
+          // 没有子节点时，node.rightChild 为 null ，将 null 连接到 parent，
           this.link_parent(parent, node, node.rightChild);
         }
         return true;
@@ -126,9 +140,7 @@ const binarySearchTree = new BinarySearchTree();
 arr.forEach((item) => {
   binarySearchTree.insert(item);
 });
-console.log('my start----------------------------------------');
-// binarySearchTree.pre_order(binarySearchTree.root, (node) => {
-//   console.log(node.data);
-// });
-console.log(binarySearchTree.search(40));
-console.log('my end----------------------------------------');
+binarySearchTree.remove(27);
+binarySearchTree.pre_order(binarySearchTree.root, (node) => {
+  console.log(node.data);
+});
