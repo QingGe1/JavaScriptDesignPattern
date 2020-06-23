@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    p{
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <p @click="add">模板插值{{counter}}</p>
+    <p>c-text<span c-text="counter"></span></p>
+    <input type="text" :value='inputValue'>
+    <!-- @click="() => {add}" -->
+    <p c-html="desc"></p>
+    <input type="text" c-model="inputValue">
+    <p c-text="inputValue" @click="click"></p>
+  </div>
+
+  <script src="minimvvm.js"></script>
+
+  <script>
+    const app = new CVue({
+      el:'#app',
+      data: {
+        counter: 1,
+        desc: '<span style="color:red">kvue可还行？</span>',
+        inputValue: 'inputValue default'
+      },
+      methods: {
+        add() {
+          this.counter++
+        },
+        click() {
+          this.inputValue = 'inputValue default'
+        }
+      },
+    })
+    setInterval(() => {
+      app.counter++
+    }, 1000);
+    
+  </script>
+</body>
+</html>
