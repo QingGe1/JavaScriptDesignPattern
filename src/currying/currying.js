@@ -5,6 +5,7 @@ function currying(fn) {
       return fn.apply(this, args);
     } else {
       [].push.apply(args, arguments);
+      // callee可以保证外部名称的变化，不会引起内部代码的修改，代码耦合度降低
       return arguments.callee;
     }
   };
