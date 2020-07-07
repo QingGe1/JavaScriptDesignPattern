@@ -11,6 +11,7 @@ function currying(fn) {
   };
 }
 
+// test
 let Cost = (function () {
   let money = 0;
 
