@@ -145,3 +145,8 @@ describe('Redux reduceRight Promise实现', () => {
   const { compose } = require('../redux/reducePromise');
   test(compose);
 });
+
+describe('express 数组实现', () => {
+  const { compose } = require('../express/');
+  test(compose);
+});
