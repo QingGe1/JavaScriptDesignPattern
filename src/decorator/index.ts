@@ -1,5 +1,5 @@
 @classDecorator
-class C {
+class XXX {
   @staticDecorator
   static staticMethod() { }
   @staticDecorator
@@ -12,7 +12,6 @@ class C {
   }
   set name(value) { }
 }
-type a = C
 
 function classDecorator(constructor: any) {
   console.log('classDecorator');
@@ -44,4 +43,3 @@ function staticDecorator(target: any, propertyKey: string,) {
   }
   return target
 }
-console.log(C.staticProperty);
