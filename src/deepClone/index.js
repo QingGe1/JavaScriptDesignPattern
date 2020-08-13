@@ -6,4 +6,4 @@ function deepClone(obj) {
   }
   return copy;
 }
-module.exports = { deepClone };
+module.exports.deepClone = deepClone;
